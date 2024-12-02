@@ -32,6 +32,7 @@ public class TallerAppTest {
     private static final By PASSWORD_INPUT = By.name("password");
     private static final By LOGIN_BUTTON = By.xpath("//button[@type='submit']");
     private static final By MANTENIMIENTO_BUTTON = By.id("dropdownMenuButton");
+    private static final By AUTORIZARREPA = By.name("autorizarRepa");
     private static final By LOGOUT_BUTTON = By.xpath("//a[contains(text(), ' Logout ')]");
     private static final By LOGIN_TEXT = By.xpath("//h3[text()='Login']");
     private static final By ALERT_POPUP = By.cssSelector("div.swal2-popup.swal2-icon-error");
@@ -213,7 +214,7 @@ public class TallerAppTest {
     public void testMantenimientoExistenCards() {
         System.out.println("Ejecutando prueba de validación de títulos de cards en MANTENIMIENTO...");
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
         ExtentTest testMantenimientoExistenCards = extent.createTest("Card en Mantenimiento", "Prueba de validacion card mantenimiento");
         try{
 
@@ -234,7 +235,7 @@ public class TallerAppTest {
                     "CATEGORÍA",
                     "MARCA",
                     "MODELO",
-                    "MODELO",
+                    "LOCALIDAD",
                     "USUARIO",
                     "Empleados"
             };
@@ -260,6 +261,12 @@ public class TallerAppTest {
             String screenshotPath = captureScreen("testMantenimientoExistenCards");
             testMantenimientoExistenCards.pass("Prueba de testMantenimientoExistenCards Exitosa")
                     .addScreenCaptureFromPath(screenshotPath);
+            testMantenimientoExistenCards.pass("Prueba de testMantenimientoExistenCards -  CARD: EQUIPOS");
+            testMantenimientoExistenCards.pass("Prueba de testMantenimientoExistenCards -  CARD: CATEGORÍA");
+            testMantenimientoExistenCards.pass("Prueba de testMantenimientoExistenCards -  CARD: MARCA");
+            testMantenimientoExistenCards.pass("Prueba de testMantenimientoExistenCards -  CARD: MODELO");
+            testMantenimientoExistenCards.pass("Prueba de testMantenimientoExistenCards -  CARD: USUARIO");
+            testMantenimientoExistenCards.pass("Prueba de testMantenimientoExistenCards -  CARD: LOCALIDAD");
 
         } catch (Exception e) {
             testMantenimientoExistenCards.fail("Error durante la prueba de testMantenimientoExistenCards: " + e.getMessage());
@@ -267,6 +274,138 @@ public class TallerAppTest {
         }
 
     }
+
+    @Test
+    public void testAutReparaciones(){
+        System.out.println("Ejecutando prueba navegacion a Autorizar Reparaciones");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        ExtentTest testAutReparaciones = extent.createTest("Autorizar Reparaciones", "Prueba de validación redirigir a Autorizar Reparaciones ");
+
+        try {
+            // Iniciar sesión
+            String username = "claudioa_ferreira";
+            String password = "123456";
+            driver.findElement(USERNAME_INPUT).sendKeys(username);
+            driver.findElement(PASSWORD_INPUT).sendKeys(password);
+            driver.findElement(LOGIN_BUTTON).click();
+
+            //Navegar al a autorizacion reparacion
+            WebElement autoReparacion = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("autReparaciones")));
+            autoReparacion.click();
+
+            //Verificar si fue redirigido a autorizar reparaciones
+            WebElement autorizarRepa = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("autorizarRepa")));
+
+            System.out.println("Navegación exitosa a la sección de Autorizar Reparaciones.");
+
+            String screenshotPath = captureScreen("TestNavegacion AutorizacionReparacion");
+            testAutReparaciones.pass("Prueba de TestNavegacion AutorizacionReparacion Exitosa")
+                    .addScreenCaptureFromPath(screenshotPath);
+
+        } catch (Exception e) {
+            String screenshotPath = captureScreen("TestNavegacion_AutorizacionReparacion_Error");
+            testAutReparaciones.fail("Error durante la navegación: " + e.getMessage())
+                    .addScreenCaptureFromPath(screenshotPath);
+            System.err.println("Error durante la prueba: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    @Test
+    public void testAutReparacionesBotones(){
+        System.out.println("Ejecutando prueba de botones a Autorizar Reparaciones");
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        ExtentTest testAutReparaciones = extent.createTest("BOTONES Autorizar Reparaciones", "Prueba de BOTONES  ");
+
+        try {
+            // Iniciar sesión
+            String username = "claudioa_ferreira";
+            String password = "123456";
+            driver.findElement(USERNAME_INPUT).sendKeys(username);
+            driver.findElement(PASSWORD_INPUT).sendKeys(password);
+            driver.findElement(LOGIN_BUTTON).click();
+
+            //Navegar al a autorizacion reparacion
+            WebElement autoReparacion = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("autReparaciones")));
+            autoReparacion.click();
+
+            //Verificar si fue redirigido a autorizar reparaciones
+            WebElement autorizarRepa = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name("autorizarRepa")));
+
+            System.out.println("Navegación exitosa a la sección de Autorizar Reparaciones.");
+
+            String screenshotPath = captureScreen("TestNavegacion AutorizacionReparacion");
+            testAutReparaciones.pass("Prueba de TestNavegacion AutorizacionReparacion Exitosa")
+                    .addScreenCaptureFromPath(screenshotPath);
+
+        } catch (Exception e) {
+            String screenshotPath = captureScreen("TestNavegacion_AutorizacionReparacion_Error");
+            testAutReparaciones.fail("Error durante la navegación: " + e.getMessage())
+                    .addScreenCaptureFromPath(screenshotPath);
+            System.err.println("Error durante la prueba: " + e.getMessage());
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+
+    }
+
+    @Test
+    public void testDashBoardExistenCards() {
+        System.out.println("Ejecutando prueba de validación cards en DASHBOARD");
+
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        ExtentTest testDashBoardExistenCards = extent.createTest("Card en DASHBOARD", "Prueba de validación card DASHBOARD para: totalNoAutorizadosTitle, totalAutorizadosTitle, totalReparadosTitle, totalequiposPiezasTitle ");
+        try {
+            // Iniciar sesión
+            String username = "claudioa_ferreira";
+            String password = "123456";
+            driver.findElement(USERNAME_INPUT).sendKeys(username);
+            driver.findElement(PASSWORD_INPUT).sendKeys(password);
+            driver.findElement(LOGIN_BUTTON).click();
+
+            // Títulos esperados (basados en atributos name)
+            String[] expectedNames = {
+                    "totalNoAutorizadosTitle",
+                    "totalAutorizadosTitle",
+                    "totalReparadosTitle",
+                    "totalequiposPiezasTitle"
+            };
+
+            // Validar que cada título esperado exista en la página
+            for (String expectedName : expectedNames) {
+                try {
+                    WebElement card = wait.until(ExpectedConditions.visibilityOfElementLocated(By.name(expectedName)));
+
+                    // Valida que el card esté visible
+                    assert card.isDisplayed() : "No se encontró el card con el name: " + expectedName;
+                    System.out.println("Validado: " + expectedName);
+
+                } catch (Exception e) {
+                    System.err.println("Error al validar el card con el name: " + expectedName);
+                    e.printStackTrace();
+                }
+            }
+
+            System.out.println("Todos los títulos de los cards fueron validados exitosamente.");
+
+            String screenshotPath = captureScreen("testMantenimientoExistenCards");
+            testDashBoardExistenCards.pass("Prueba de testMantenimientoExistenCards Exitosa")
+                    .addScreenCaptureFromPath(screenshotPath);
+
+        } catch (Exception e) {
+            String screenshotPath = captureScreen("testMantenimientoExistenCards_error");
+            testDashBoardExistenCards.fail("Error durante la prueba de testMantenimientoExistenCards: " + e.getMessage())
+                    .addScreenCaptureFromPath(screenshotPath);
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
 
     @AfterMethod
     public void teardown() {
